@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import * as WebpackDevServer from 'webpack-dev-server';
 import * as SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import * as fs from 'fs-extra';
 import { globalState } from './global-state';
 import { plugin } from './plugins';
 import { tempPath, srcPath, packagesPath } from './structor-config';
@@ -48,6 +49,13 @@ export const runWebpackDevServer = async (
   configWrapper?: (webpackConfig: webpack.Configuration) => webpack.Configuration,
 ) => {
   let webpackConfig = await getWebpackConfig(opts);
+
+  // fs.writeFile('./wbconfig.json', JSON.stringify(webpackConfig), err => {
+  //   if (err) {
+  //     console.error(err);
+  //   }
+  //   // file written successfully
+  // });
 
   if (opts.pipeConfig) {
     webpackConfig = await opts.pipeConfig(webpackConfig);
@@ -108,6 +116,7 @@ export const runWebpackDevServer = async (
     },
     allowedHosts: 'all',
     port: opts.devServerPort,
+    https: true,
   } as any;
 
   const webpackDevServerConfig = (await plugin.devServerConfigPipes.reduce(async (newConfig, fn) => {

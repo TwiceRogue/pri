@@ -26,6 +26,7 @@ export const projectDev = async (options: any) => {
   if (options && options.debugDashboard) {
     await debugDashboard();
   } else {
+    // console.log('debugProject');
     await debugProject(options);
   }
 };
@@ -102,7 +103,10 @@ async function debugProject(options?: any) {
     return scopeAnalyseInfo;
   });
 
+  // console.log('pri.sourceConfig.disableDllWhenDev', pri.sourceConfig.disableDllWhenDev);
+
   if (!pri.sourceConfig.disableDllWhenDev) {
+    // console.log('bundleDlls');
     await bundleDlls({ dllOutPath, dllFileName, dllMainfestName });
   }
 
@@ -113,6 +117,8 @@ async function debugProject(options?: any) {
   if (!pri.sourceConfig.disableDashboard) {
     // Bundle dashboard if plugins changed or dashboard bundle not exist.
     const dashboardDistDir = path.join(pri.projectRootPath, tempPath.dir, 'static/dashboard-bundle');
+    // console.log('dashboard-bundle');
+
     if (!fs.existsSync(path.join(dashboardDistDir, `${dashboardBundleFileName}.js`))) {
       const dashboardEntryFilePath = createDashboardEntry();
 

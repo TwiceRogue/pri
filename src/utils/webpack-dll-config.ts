@@ -61,6 +61,12 @@ export const getWebpackDllConfig = (opts: IDllOptions) => {
           test: /\.css/,
           use: ['style-loader', 'css-loader'],
         },
+        {
+          test: /\.m?js/,
+          resolve: {
+            fullySpecified: false,
+          },
+        },
       ],
     },
 
@@ -71,7 +77,7 @@ export const getWebpackDllConfig = (opts: IDllOptions) => {
         // Self node_modules
         path.join(__dirname, '../../../node_modules'),
       ],
-      extensions: ['.js', '.jsx', '.tsx', '.ts', '.scss', '.less', '.css'],
+      extensions: ['.js', '.jsx', '.tsx', '.ts', '.scss', '.less', '.css', '.mjs'],
     },
 
     resolveLoader: {

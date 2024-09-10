@@ -72,6 +72,14 @@ export const runWebpackDll = async (opts: IDllOptions): Promise<any> => {
     webpackConfig = await opts.pipeConfig(webpackConfig);
   }
 
+  // fs.writeFile('./wbbundleconfig.json', JSON.stringify(webpackConfig), err => {
+  //   if (err) {
+  //     console.error(err);
+  //   }
+  //   // file written successfully
+  // });
+  // console.log('webpackDllConfig ===== 1111', JSON.stringify(webpackConfig));
+
   const compiler = webpack(webpackConfig);
   return runCompiler(compiler);
 };

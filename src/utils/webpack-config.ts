@@ -86,6 +86,7 @@ export const getWebpackConfig = async (opts: IOptions) => {
   const outFileName = opts.outFileName || globalState.sourceConfig.outFileName;
   const outCssFileName = opts.outCssFileName || globalState.sourceConfig.outCssFileName;
 
+  // console.log('==========test=============');
   const styleLoader = {
     loader: 'style-loader',
     options: plugin.buildConfigStyleLoaderOptionsPipes.reduce((options, fn) => {
@@ -143,6 +144,7 @@ export const getWebpackConfig = async (opts: IOptions) => {
     ),
   };
 
+  // console.log('======babelLoader=========', babelLoader);
   const extraCssInProd = (...loaders: any[]) => {
     // Enable cssExtract, but not in bundle command.
     if (globalState.sourceConfig.cssExtract && yargs.argv._[0] !== 'bundle' && !yargs.argv._[0].startsWith('debug')) {
@@ -174,7 +176,7 @@ export const getWebpackConfig = async (opts: IOptions) => {
     output: {
       path: distDir,
       filename: outFileName,
-      publicPath: 'auto',
+      publicPath: '/',
       chunkFilename: '[name].[hash].chunk.js',
       hotUpdateChunkFilename: 'hot~[id].[hash].chunk.js',
       hashDigestLength: 4,
@@ -272,6 +274,13 @@ export const getWebpackConfig = async (opts: IOptions) => {
             },
           ],
         },
+        {
+          test: /\.m?js$/,
+          type: 'javascript/auto',
+          resolve: {
+            fullySpecified: false,
+          },
+        },
       ],
     },
     resolve: {
@@ -331,6 +340,7 @@ export const getWebpackConfig = async (opts: IOptions) => {
       splitChunks: {
         cacheGroups: {
           default: false,
+          defaultVendors: false,
         },
       },
     },
